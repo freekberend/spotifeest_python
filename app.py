@@ -24,7 +24,7 @@ def routeolaf():
 
 @app.route("/nathalie")
 def routenathalie():
-    return nathalie.methodenathalie1()
+    return nathalie.mehodenathalie1()
 
 @app.route("/richard")
 def routerichard():
