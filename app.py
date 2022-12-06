@@ -1,4 +1,5 @@
-from flask import Flask
+from flask import Flask, request, jsonify
+import get_recommendations
 import felix
 import Olaf
 import nathalie
@@ -12,6 +13,13 @@ app = Flask(__name__)
 @app.route("/")
 def hello_world():
     return "<p>Hello, World!</p>"
+
+@app.route('/get_recommendations', methods=["POST"])
+def get_spotify_recommendations():
+    input_json = request.get_json(force=True)
+    access_token = get_recommendations.get_access_token()
+    recommendations = get_recommendations.get_recommendations_on_spotify(access_token, **input_json)
+    return recommendations
 
 
 @app.route("/felix")
