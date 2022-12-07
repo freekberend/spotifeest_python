@@ -82,6 +82,28 @@ def input_track_or_artist(access_token):
 
     return artist, type_, artist_id, track_id
 
+def get_id_from_artist(access_token, artist):
+    type_ = "artist"
+    jsonresponse = get_genre_from_artist_or_songname(
+    access_token = access_token,
+    q = artist,
+    type = type_,
+    limit= 1,
+    )
+    return jsonresponse["artists"]["items"][0]["id"]
+
+def get_id_from_track(access_token, track):
+    type_ = "track"
+    jsonresponse = get_genre_from_artist_or_songname(
+    access_token = access_token,
+    q = track,
+    type = type_,
+    limit= 1,
+    )
+    return jsonresponse["tracks"]["items"][0]["id"]
+
+
+
 def get_genres_from_input(artist, type_, access_token):
     jsonresponse = get_genre_from_artist_or_songname(
     access_token = access_token,
@@ -112,7 +134,10 @@ def main():
         limit= 1,
     )
 
-    
+#    print(get_id_from_artist(access_token, "The Strokes"))
+    TrackId = get_id_from_track(access_token, "Last Nite")
+    recoms = get_recommendations_on_spotify(access_token, limit=1, seed_tracks= TrackId)
+    print(recoms["tracks"][0]["artists"][0]["name"] + " - " + recoms["tracks"][0]["name"])
     #track_or_artist = input_track_or_artist()
     #print(track_or_artist)
     # voorbeeld van volledige json
@@ -125,9 +150,9 @@ def main():
     # print de recommendation (artist - nummer)
     #print(f'{playlist["tracks"][0]["artists"][0]["name"]} - {playlist["tracks"][0]["name"]}')
 
-    artist, type_, artist_id, track_id = input_track_or_artist(access_token)
-    genre_pref = get_genres_from_input(artist, type_, access_token)
-    print(", ".join(genre_pref[:]))
+#    artist, type_, artist_id, track_id = input_track_or_artist(access_token)
+#    genre_pref = get_genres_from_input(artist, type_, access_token)
+#    print(", ".join(genre_pref[:]))
     
     available_genre_seed_list = get_available_genre_seeds(access_token)["genres"]
     
@@ -137,23 +162,23 @@ def main():
             print(genre)
         
 
-    genre_based_playlist = get_recommendations_on_spotify(
-        access_token = access_token,
-        limit= 1,
-        seed_genres= genre_pref
-    )
+#    genre_based_playlist = get_recommendations_on_spotify(
+#        access_token = access_token,
+#        limit= 1,
+#        seed_genres= genre_pref
+#    )
 
-    artist_based_playlist = get_recommendations_on_spotify(
-        access_token = access_token,
-        limit= 10,
-        seed_artists= artist_id
-    )    
+#    artist_based_playlist = get_recommendations_on_spotify(
+#        access_token = access_token,
+#        limit= 10,
+#        seed_artists= artist_id
+#    )    
     
     print("\n")
     #print(genre_based_playlist)
     #print(f'{genre_based_playlist["tracks"][0]["artists"][0]["name"]} - {genre_based_playlist["tracks"][0]["name"]}')
 
-    print(f'{artist_based_playlist["tracks"][0]["artists"][0]["name"]} - {artist_based_playlist["tracks"][0]["name"]}')
+#    print(f'{artist_based_playlist["tracks"][0]["artists"][0]["name"]} - {artist_based_playlist["tracks"][0]["name"]}')
 
 
 
