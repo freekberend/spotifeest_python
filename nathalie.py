@@ -1,3 +1,4 @@
+import json
 import sqlite3
 
 import get_recommendations
@@ -189,4 +190,5 @@ def party():
             new[key] = value
         data_str = data_str[:-2] + '<br>'
         data_lijst.append(new)
-    return data_lijst
+    print(data_lijst)
+    return json.dumps(data_lijst, indent=4)
