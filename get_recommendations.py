@@ -115,6 +115,7 @@ def get_genres_from_input(artist, type_, access_token):
     )
     return jsonresponse["artists"]["items"][0]["genres"]
 
+#test dataset nathalie
 def get_genres_for_recommendation(**kwargs):
     access_token = get_access_token()
     recommendation = get_recommendations_on_spotify(access_token, **kwargs)
