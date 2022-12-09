@@ -11,4 +11,21 @@ def party():
         query = f.read()
     cursor = connection.cursor()
     cursor.executescript(query)
-    print(get_recommendations.get_genres_for_recommendation())
+    print(recommendations["tracks"][0]["id"])
+    print(recommendations["tracks"][0]["name"])
+    trackid = recommendations["tracks"][0]["id"]
+    trackname = recommendations["tracks"][0]["name"]
+    cursor.execute("insert into track values (?,?)", (trackid, trackname))
+
+    for artist in recommendations["tracks"][0]["artists"]:
+        print(artist["genres"])
+        print(artist["name"])
+        print(artist["id"])
+        artist_id = artist["id"]
+        artist_name = artist["name"]
+        cursor.execute("INSERT INTO artist VALUES (?, ?, ?)", (artist_id, artist_name, trackid))
+
+    connection.commit()
+    data = cursor.execute("select * from artist").fetchall()
+    return str(data)
+    
