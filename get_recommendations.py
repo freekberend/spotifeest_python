@@ -115,7 +115,11 @@ def get_genres_from_input(artist, type_, access_token):
     )
     return jsonresponse["artists"]["items"][0]["genres"]
 
+<<<<<<< HEAD
 #test dataset nathalie
+=======
+
+>>>>>>> main
 def get_genres_for_recommendation(**kwargs):
     access_token = get_access_token()
     recommendation = get_recommendations_on_spotify(access_token, **kwargs)
@@ -129,6 +133,22 @@ def get_genres_for_recommendation(**kwargs):
         recommendation["tracks"][0]["artists"][index]["genres"] = artist_info["genres"]
 
     return recommendation
+
+
+def get_track_features(track_ids):
+    if not isinstance(track_ids, list):
+        return requests.get(f"https://api.spotify.com/v1/audio-features/{track_ids}",
+                            headers={"Authorization": f"Bearer {get_access_token()}"}
+                            ).json()
+
+    track_data = []
+    for one_track_id in track_ids:
+        track_features = requests.get(f"https://api.spotify.com/v1/audio-features/{one_track_id}",
+                                      headers={"Authorization": f"Bearer {get_access_token()}"}
+                                      ).json()
+        track_data.append(track_features)
+
+    return track_data
 
 
 def main():
