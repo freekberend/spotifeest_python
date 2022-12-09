@@ -11,7 +11,7 @@ CREATE TABLE artist(
 );
 
 CREATE TABLE genre(
-    genre_id TEXT PRIMARY KEY NOT NULL,
+    genre_id INTEGER PRIMARY KEY AUTOINCREMENT,
     genre TEXT NOT NULL,
     artist_id TEXT NOT NULL,
     FOREIGN KEY (artist_id) REFERENCES artist (artist_id)

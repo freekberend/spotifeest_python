@@ -1,12 +1,15 @@
-import get_recommendations
 import sqlite3
+
+import get_recommendations
+
 
 def mehodenathalie1():
     return "dit is methode1"
 
+
 def party():
     recommendations = get_recommendations.get_genres_for_recommendation(limit=1, seed_genres='pop')
-    connection=sqlite3.connect(":memory:")
+    connection = sqlite3.connect(":memory:")
     with open("createtables.sql") as f:
         query = f.read()
     cursor = connection.cursor()
@@ -25,7 +28,14 @@ def party():
         artist_name = artist["name"]
         cursor.execute("INSERT INTO artist VALUES (?, ?, ?)", (artist_id, artist_name, trackid))
 
+        connection.commit()
+        genres_in_database = cursor.execute("SELECT genre FROM genre;").fetchall()
+        print(genres_in_database)
+        genres = artist["genres"]
+        for genre in genres:
+            if genre not in genres_in_database:
+                cursor.execute("INSERT INTO genre (genre, artist_id) VALUES (?, ?)", (genre, artist_id))
+
     connection.commit()
-    data = cursor.execute("select * from artist").fetchall()
+    data = cursor.execute("select * from genre").fetchall()
     return str(data)
-    
