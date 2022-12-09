@@ -1,13 +1,14 @@
-from flask import Flask, request, jsonify
 import json
-import get_recommendations
+
 import felix
-import Olaf
-import nathalie
-import richard
 import freek
-import skott
+import get_recommendations
 import maarten
+import nathalie
+import Olaf
+import richard
+import skott
+from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
@@ -75,3 +76,7 @@ def routemaarten():
 @app.route("/skott")
 def routeskott():
     return skott.methodeSkott()
+
+@app.route("/docentfreek")
+def routedocentfreek():
+    return get_recommendations.get_genres_for_recommendation(limit=1, market="NL", seed_genres="pop")
