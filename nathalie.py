@@ -42,9 +42,13 @@ def party():
     data = cursor.execute(query).fetchall()
     kolommen = [i[0] for i in cursor.description]
     data_str = ""
+    data_lijst = []
     for regel in data:
+        new = {}
         for key, value in zip(kolommen, regel):
-            print(key, value, sep=': ', end='')
+            # print(key, value, sep=': ', end='')
             data_str += f"{key}: {value}, "
+            new[key] = value
         data_str = data_str[:-2] + '<br>'
-    return data_str
+        data_lijst.append(new)
+    return data_lijst
