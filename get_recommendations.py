@@ -1,6 +1,7 @@
-import requests
 import json
+
 import geheim
+import requests
 
 # Client ID en Secret kun je verkrijgen door een app aan te maken in de Spotify developer site (dashboard).
 
@@ -10,7 +11,8 @@ CLIENT_SECRET = geheim.CLIENT_SECRET
 SPOTIFY_AUTH_URL = 'https://accounts.spotify.com/api/token'
 SPOTIFY_GET_RECOMMENDATIONS_URL = 'https://api.spotify.com/v1/recommendations'
 SPOTIFY_SEARCH_ITEM = "https://api.spotify.com/v1/search"
-AVAILABLE_GENRE_SEEDS =	"https://api.spotify.com/v1/recommendations/available-genre-seeds"
+AVAILABLE_GENRE_SEEDS = "https://api.spotify.com/v1/recommendations/available-genre-seeds"
+SPOTIFY_ARTIST_BY_ID = "https://api.spotify.com/v1/artists/"
 
 
 def get_access_token():
@@ -113,7 +115,18 @@ def get_genres_from_input(artist, type_, access_token):
     )
     return jsonresponse["artists"]["items"][0]["genres"]
 
-
+def get_genres_for_recommendation(**kwargs):
+    access_token = get_access_token()
+    recommendation = get_recommendations_on_spotify(access_token, **kwargs)
+    genres = []
+    for artist in recommendation["tracks"][0]["artists"]:
+        artist_info = requests.get(
+            SPOTIFY_ARTIST_BY_ID + artist["id"],
+            headers={"Authorization": f"Bearer {access_token}"},
+        ).json()
+        genres.extend(artist_info["genres"])
+    recommendation["genres"] = genres
+    return recommendation
 
 
 def main():
