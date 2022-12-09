@@ -77,6 +77,12 @@ def routemaarten():
 def routeskott():
     return skott.methodeSkott()
 
+
 @app.route("/docentfreek")
 def routedocentfreek():
     return get_recommendations.get_genres_for_recommendation(limit=1, market="NL", seed_genres="pop")
+
+
+@app.route("/get_track_features/<track_id>")
+def route_get_track_features(track_id):
+    return get_recommendations.get_track_features(track_id)
