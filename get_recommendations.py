@@ -118,6 +118,8 @@ def get_genres_from_input(artist, type_, access_token):
 def get_genres_for_recommendation(**kwargs):
     access_token = get_access_token()
     recommendation = get_recommendations_on_spotify(access_token, **kwargs)
+    if not recommendation.get('tracks'):
+        raise ValueError(f"Geen tracks voor {kwargs}")
     for index, artist in enumerate(recommendation["tracks"][0]["artists"]):
         artist_info = requests.get(
             SPOTIFY_ARTIST_BY_ID + artist["id"],

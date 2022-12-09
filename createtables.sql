@@ -1,6 +1,7 @@
 CREATE TABLE track(
     track_id TEXT PRIMARY KEY NOT NULL,
-    track TEXT NOT NULL
+    track TEXT NOT NULL,
+    person TEXT
 );
 
 CREATE TABLE artist(
