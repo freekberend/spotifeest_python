@@ -14,28 +14,37 @@ def party():
         query = f.read()
     cursor = connection.cursor()
     cursor.executescript(query)
-    print(recommendations["tracks"][0]["id"])
-    print(recommendations["tracks"][0]["name"])
+    # print(recommendations["tracks"][0]["id"])
+    # print(recommendations["tracks"][0]["name"])
     trackid = recommendations["tracks"][0]["id"]
     trackname = recommendations["tracks"][0]["name"]
     cursor.execute("insert into track values (?,?)", (trackid, trackname))
 
     for artist in recommendations["tracks"][0]["artists"]:
-        print(artist["genres"])
-        print(artist["name"])
-        print(artist["id"])
+        # print(artist["genres"])
+        # print(artist["name"])
+        # print(artist["id"])
         artist_id = artist["id"]
         artist_name = artist["name"]
         cursor.execute("INSERT INTO artist VALUES (?, ?, ?)", (artist_id, artist_name, trackid))
 
         connection.commit()
         genres_in_database = cursor.execute("SELECT genre FROM genre;").fetchall()
-        print(genres_in_database)
+        # print(genres_in_database)
         genres = artist["genres"]
         for genre in genres:
             if genre not in genres_in_database:
                 cursor.execute("INSERT INTO genre (genre, artist_id) VALUES (?, ?)", (genre, artist_id))
 
     connection.commit()
-    data = cursor.execute("select * from genre").fetchall()
-    return str(data)
+    with open("joined_select.sql") as f:
+        query = f.read()
+    data = cursor.execute(query).fetchall()
+    kolommen = [i[0] for i in cursor.description]
+    data_str = ""
+    for regel in data:
+        for key, value in zip(kolommen, regel):
+            print(key, value, sep=': ', end='')
+            data_str += f"{key}: {value}, "
+        data_str = data_str[:-2] + '<br>'
+    return data_str
