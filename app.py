@@ -57,6 +57,10 @@ def routeolaf():
 def routenathalie():
     return nathalie.mehodenathalie1()
 
+@app.route("/nathalieParty")
+def routenathalieParty():
+    return nathalie.party()
+
 @app.route("/richard")
 def routerichard():
     return richard.methoderichard1()
