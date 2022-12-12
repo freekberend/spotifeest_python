@@ -1,6 +1,7 @@
-import requests
 import json
+
 import geheim
+import requests
 
 # Client ID en Secret kun je verkrijgen door een app aan te maken in de Spotify developer site (dashboard).
 
@@ -10,7 +11,8 @@ CLIENT_SECRET = geheim.CLIENT_SECRET
 SPOTIFY_AUTH_URL = 'https://accounts.spotify.com/api/token'
 SPOTIFY_GET_RECOMMENDATIONS_URL = 'https://api.spotify.com/v1/recommendations'
 SPOTIFY_SEARCH_ITEM = "https://api.spotify.com/v1/search"
-AVAILABLE_GENRE_SEEDS =	"https://api.spotify.com/v1/recommendations/available-genre-seeds"
+AVAILABLE_GENRE_SEEDS = "https://api.spotify.com/v1/recommendations/available-genre-seeds"
+SPOTIFY_ARTIST_BY_ID = "https://api.spotify.com/v1/artists/"
 
 
 def get_access_token():
@@ -113,7 +115,40 @@ def get_genres_from_input(artist, type_, access_token):
     )
     return jsonresponse["artists"]["items"][0]["genres"]
 
+<<<<<<< HEAD
+#test dataset nathalie
+=======
 
+>>>>>>> main
+def get_genres_for_recommendation(**kwargs):
+    access_token = get_access_token()
+    recommendation = get_recommendations_on_spotify(access_token, **kwargs)
+    if not recommendation.get('tracks'):
+        raise ValueError(f"Geen tracks voor {kwargs}")
+    for index, artist in enumerate(recommendation["tracks"][0]["artists"]):
+        artist_info = requests.get(
+            SPOTIFY_ARTIST_BY_ID + artist["id"],
+            headers={"Authorization": f"Bearer {access_token}"},
+        ).json()
+        recommendation["tracks"][0]["artists"][index]["genres"] = artist_info["genres"]
+
+    return recommendation
+
+
+def get_track_features(track_ids):
+    if not isinstance(track_ids, list):
+        return requests.get(f"https://api.spotify.com/v1/audio-features/{track_ids}",
+                            headers={"Authorization": f"Bearer {get_access_token()}"}
+                            ).json()
+
+    track_data = []
+    for one_track_id in track_ids:
+        track_features = requests.get(f"https://api.spotify.com/v1/audio-features/{one_track_id}",
+                                      headers={"Authorization": f"Bearer {get_access_token()}"}
+                                      ).json()
+        track_data.append(track_features)
+
+    return track_data
 
 
 def main():
