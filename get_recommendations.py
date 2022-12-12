@@ -8,8 +8,8 @@ import requests
 # De te gebruiken API's van Spotify
 # CLIENT_ID = geheim.CLIENT_ID
 # CLIENT_SECRET = geheim.CLIENT_SECRET
-CLIENT_ID = os.environ["CLIENT_ID"]
-CLIENT_SECRET = os.environ["CLIENT_SECRET"]
+CLIENT_ID = os.getenv('CLIENT_ID', 'empty')
+CLIENT_SECRET = os.getenv('CLIENT_SECRET', 'empty')
 SPOTIFY_AUTH_URL = 'https://accounts.spotify.com/api/token'
 SPOTIFY_GET_RECOMMENDATIONS_URL = 'https://api.spotify.com/v1/recommendations'
 SPOTIFY_SEARCH_ITEM = "https://api.spotify.com/v1/search"

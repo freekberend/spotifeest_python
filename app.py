@@ -19,7 +19,7 @@ def hello_world():
 
 @app.route("/testenviroment")
 def geheimen():
-    return "123" + os.environ["CLIENT_ID"]
+    return "123" + os.getenv('CLIENT_ID', 'empty')
 
 @app.route('/get_recommendations', methods=["POST"])
 def get_spotify_recommendations():
