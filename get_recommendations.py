@@ -1,6 +1,6 @@
-import json
+# import json
 import os
-import geheim
+# import geheim
 import requests
 
 # Client ID en Secret kun je verkrijgen door een app aan te maken in de Spotify developer site (dashboard).
