@@ -17,6 +17,7 @@ app = Flask(__name__)
 def hello_world():
     return "<p>Hello, World!</p>"
 
+@app.route("/testenviroment")
 def geheimen():
     return "123" + os.environ["CLIENT_ID"]
 
