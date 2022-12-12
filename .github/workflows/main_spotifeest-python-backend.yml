@@ -61,6 +61,3 @@ jobs:
           app-name: 'spotifeest-python-backend'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_8A201002FE894732A6BCE5621DFBFDCD }}
-          env:
-            CLIENT_ID = ${{ secrets.CLIENT_ID }}
-            CLIENT_SECRET = ${{ secrets.CLIENT_SECRET }}

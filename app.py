@@ -9,7 +9,6 @@ import Olaf
 import richard
 import skott
 from flask import Flask, jsonify, request
-import os
 
 app = Flask(__name__)
 
@@ -19,7 +18,7 @@ def hello_world():
 
 @app.route("/testenviroment")
 def geheimen():
-    return "123" + os.getenv('CLIENT_ID', 'empty')
+    return "123"
 
 @app.route('/get_recommendations', methods=["POST"])
 def get_spotify_recommendations():
