@@ -23,9 +23,6 @@ jobs:
           python-version: '3.10'
 
       - name: Create and start virtual environment     
-        env:
-            CLIENT_ID = ${{ secrets.CLIENT_ID }}
-            CLIENT_SECRET = ${{ secrets.CLIENT_SECRET }}
         run: |
           python -m venv venv
           source venv/bin/activate
@@ -64,3 +61,6 @@ jobs:
           app-name: 'spotifeest-python-backend'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_8A201002FE894732A6BCE5621DFBFDCD }}
+          env:
+            CLIENT_ID = ${{ secrets.CLIENT_ID }}
+            CLIENT_SECRET = ${{ secrets.CLIENT_SECRET }}
