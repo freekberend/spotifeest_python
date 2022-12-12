@@ -35,9 +35,7 @@ jobs:
         env:
           CLIENT_ID = ${{ secrets.CLIENT_ID }}
           CLIENT_SECRET = ${{ secrets.CLIENT_SECRET }}
-        run:
-          nbdev_test_nbs
-          
+  
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v2
         with:
