@@ -2,20 +2,25 @@
 import os
 # import geheim
 import requests
+# import mysql.connector
 
 # Client ID en Secret kun je verkrijgen door een app aan te maken in de Spotify developer site (dashboard).
 
 # De te gebruiken API's van Spotify
-# CLIENT_ID = geheim.CLIENT_ID
-# CLIENT_SECRET = geheim.CLIENT_SECRET
-CLIENT_ID = os.getenv('CLIENT_ID', 'empty')
-CLIENT_SECRET = os.getenv('CLIENT_SECRET', 'empty')
+CLIENT_ID = os.environ["CLIENT_ID"]
+CLIENT_SECRET = os.environ["CLIENT_SECRET"]
 SPOTIFY_AUTH_URL = 'https://accounts.spotify.com/api/token'
 SPOTIFY_GET_RECOMMENDATIONS_URL = 'https://api.spotify.com/v1/recommendations'
 SPOTIFY_SEARCH_ITEM = "https://api.spotify.com/v1/search"
 AVAILABLE_GENRE_SEEDS = "https://api.spotify.com/v1/recommendations/available-genre-seeds"
 SPOTIFY_ARTIST_BY_ID = "https://api.spotify.com/v1/artists/"
 
+# mydb = mysql.connector.connect(user="spotifeest_mysql", password="abcd1234ABCD!@#$", host="yc2211mysql.mysql.database.azure.com", port=3306, database="configuration", ssl_ca="https://dl.cacerts.digicert.com/DigiCertGlobalRootCA.crt.pem", ssl_disabled=False)
+
+# mycursor = mydb.cursor()
+# mycursor.execute("SELECT CLIENT_ID FROM sleutels WHERE ")
+# myresult = mycursor.fetchall()
+# print(myresult)
 
 def get_access_token():
     auth_response = requests.post(SPOTIFY_AUTH_URL, {
