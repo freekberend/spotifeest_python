@@ -31,7 +31,13 @@ jobs:
         run: pip install -r requirements.txt
         
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
-      
+      - name: geheime_keys
+        env:
+          CLIENT_ID = ${{ secrets.CLIENT_ID }}
+          CLIENT_SECRET = ${{ secrets.CLIENT_SECRET }}
+        run:
+          nbdev_test_nbs
+          
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v2
         with:
