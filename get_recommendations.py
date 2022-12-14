@@ -15,6 +15,8 @@ SPOTIFY_SEARCH_ITEM = "https://api.spotify.com/v1/search"
 AVAILABLE_GENRE_SEEDS = "https://api.spotify.com/v1/recommendations/available-genre-seeds"
 SPOTIFY_ARTIST_BY_ID = "https://api.spotify.com/v1/artists/"
 
+
+
 # mydb = mysql.connector.connect(user="spotifeest_mysql", password="abcd1234ABCD!@#$", host="yc2211mysql.mysql.database.azure.com", port=3306, database="configuration", ssl_ca="https://dl.cacerts.digicert.com/DigiCertGlobalRootCA.crt.pem", ssl_disabled=False)
 
 # mycursor = mydb.cursor()
@@ -152,6 +154,16 @@ def get_track_features(track_ids):
 
     return track_data
 
+def createPlaylist(access_token):
+    user_id = "1133249149"
+    endpoint_url = f"https://api.spotify.com/v1/users/{user_id}/playlists"
+    request_body = json.dumps({
+            "name": "Indie bands like Franz Ferdinand but using Python",
+            "description": "My first programmatic playlist, yooo!",
+            "public": False # let's keep it between us - for now
+            })
+    response = requests.post(url = endpoint_url, data = request_body, headers={"Content-Type":"application/json", 
+                            "Authorization":access_token})
 
 def main():
     # Haal een nieuwe access token op 
@@ -171,60 +183,22 @@ def main():
         limit= 1,
     )
 
-#    print(get_id_from_artist(access_token, "The Strokes"))
     TrackId = get_id_from_track(access_token, "Last Nite")
     recoms = get_recommendations_on_spotify(access_token, limit=1, seed_tracks= TrackId)
     print(recoms["tracks"][0]["artists"][0]["name"] + " - " + recoms["tracks"][0]["name"])
-    #track_or_artist = input_track_or_artist()
-    #print(track_or_artist)
-    # voorbeeld van volledige json
-    #print(genre)
-    
-    
-#    print(f'{genre["artists"]["items"][0]["genres"]}')
 
-    #print(playlist)
-    # print de recommendation (artist - nummer)
-    #print(f'{playlist["tracks"][0]["artists"][0]["name"]} - {playlist["tracks"][0]["name"]}')
-
-#    artist, type_, artist_id, track_id = input_track_or_artist(access_token)
-#    genre_pref = get_genres_from_input(artist, type_, access_token)
-#    print(", ".join(genre_pref[:]))
     
+
     available_genre_seed_list = get_available_genre_seeds(access_token)["genres"]
     
     genre_pref = ["pop", "soul"]
     for genre in genre_pref:
         if genre in available_genre_seed_list:
             print(genre)
+    
+    print(createPlaylist(access_token))
         
 
-#    genre_based_playlist = get_recommendations_on_spotify(
-#        access_token = access_token,
-#        limit= 1,
-#        seed_genres= genre_pref
-#    )
-
-#    artist_based_playlist = get_recommendations_on_spotify(
-#        access_token = access_token,
-#        limit= 10,
-#        seed_artists= artist_id
-#    )    
-    
-    print("\n")
-    #print(genre_based_playlist)
-    #print(f'{genre_based_playlist["tracks"][0]["artists"][0]["name"]} - {genre_based_playlist["tracks"][0]["name"]}')
-
-#    print(f'{artist_based_playlist["tracks"][0]["artists"][0]["name"]} - {artist_based_playlist["tracks"][0]["name"]}')
-
-
-
-    #print(get_available_genre_seeds(access_token)["genres"])
-
-
-
-    #print(genre["tracks"]["items"][0]["artists"][0]["name"])
-    #print(genre["tracks"]["items"])
 
 if __name__ == '__main__':
     main()
