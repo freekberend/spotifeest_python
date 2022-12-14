@@ -16,6 +16,10 @@ app = Flask(__name__)
 def hello_world():
     return "<p>Hello, World!</p>"
 
+@app.route("/testenviroment")
+def geheimen():
+    return "123"
+
 @app.route('/get_recommendations', methods=["POST"])
 def get_spotify_recommendations():
     input_json = request.get_json(force=True)
