@@ -11,7 +11,6 @@ def mehodenathalie1():
 def party():
     connection = sqlite3.connect(":memory:")
     vul_database(connection)
-
     cursor = connection.cursor()
     # lees database
     with open("joined_select.sql") as f:
@@ -31,7 +30,7 @@ def party():
     return json.dumps(data_lijst, indent=4)
 
 
-def vul_database(connection, query, cursor):
+def vul_database(connection):
     with open("createtables.sql") as f:
         query = f.read()
     cursor = connection.cursor()
